@@ -1,0 +1,65 @@
+{
+    "name" : "ca",
+    "components" : [
+        {
+            "name": "session",
+             "env" : {
+                 "maxSessions" :"process.env.MAX_SESSIONS||5",
+                 "maxMessages" : "process.env.MAX_MESSAGES||1"
+             }
+        },
+        {
+            "module": "caf_react#plug_ca",
+            "name": "react",
+            "description": "Manages background rendering for this CA.",
+            "env" : {
+                "maxRetries" : "$._.env.maxRetries",
+                "retryDelay" : "$._.env.retryDelay",
+                "coinPlayTime" : "process.env.COIN_PLAY_TIME||900"
+            },
+            "components" : [
+                {
+                    "module": "caf_react#proxy",
+                    "name": "proxy",
+                    "description": "Provides the background rendering API.",
+                    "env" : {
+
+                    }
+                }
+            ]
+        },
+        {
+            "module": "caf_iot#plug_ca",
+            "name": "iot",
+            "description": "Manages an IoT device for this CA.",
+            "env" : {
+                "maxRetries" : "$._.env.maxRetries",
+                "retryDelay" : "$._.env.retryDelay",
+                "marginInMsec": "process.env.MARGIN_IN_MSEC||1000"
+            },
+            "components" : [
+                {
+                    "module": "caf_iot#proxy",
+                    "name": "proxy",
+                    "description": "Provides access to an IoT device.",
+                    "env" : {
+
+                    }
+                }
+            ]
+        },
+        {
+            "name": "handler",
+            "components" : [
+                {
+                    "name": "props",
+                    "env" : {
+                        "serviceID": "process.env.SERVICE_ID||BCDE",
+                        "blinkID": "process.env.BLINK_ID||ABCD",
+                        "notificationID": "process.env.NOTIFICATION_ID||AAAA"
+                    }
+                }
+            ]
+        }
+    ]
+}
