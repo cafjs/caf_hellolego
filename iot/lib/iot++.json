@@ -4,7 +4,7 @@
         "myId" : "process.env.MY_ID||foo-ca1",
         "appProtocol" : "process.env.APP_PROTOCOL||https",
         "appPublisher" : "process.env.APP_PUBLISHER||root",
-        "appLocalName" : "process.env.APP_LOCAL_NAME||helloiot",
+        "appLocalName" : "process.env.APP_LOCAL_NAME||helloiotlego",
         "appSuffix" : "process.env.APP_SUFFIX||cafjs.com",
         "interval": "process.env.INTERVAL||1000"
     },
@@ -22,20 +22,18 @@
                     "name": "queue"
                 },
                 {
-                    "module": "caf_iot_gatt#plug_iot",
-                    "name": "gatt",
-                    "description": "Access to GATT services.",
+                    "module": "caf_iot_lego#plug_iot",
+                    "name": "lego",
+                    "description": "Access to LEGO devices.",
                     "env" : {
                         "maxRetries" : "$._.env.maxRetries",
                         "retryDelay" : "$._.env.retryDelay",
-                        "findCharactTimeout" : "process.env.FIND_CHARACT_TIMEOUT||10000",
-                        "RWCharactTimeout" : "process.env.RW_CHARACT_TIMEOUT||10000"
                     },
                     "components" : [
                         {
-                            "module": "caf_iot_gatt#proxy_iot",
+                            "module": "caf_iot_lego#proxy_iot",
                             "name": "proxy",
-                            "description": "Proxy to access GATT services",
+                            "description": "Proxy to access LEGO devices",
                             "env" : {
                             }
                         }

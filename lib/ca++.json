@@ -54,9 +54,8 @@
                 {
                     "name": "props",
                     "env" : {
-                        "serviceID": "process.env.SERVICE_ID||BCDE",
-                        "blinkID": "process.env.BLINK_ID||ABCD",
-                        "notificationID": "process.env.NOTIFICATION_ID||AAAA"
+                        "legoDeviceTypes": "process.env.LEGO_DEVICE_TYPES||[\"TECHNIC_3X3_COLOR_LIGHT_MATRIX\"]",
+                        "legoColors": "process.env.LEGO_COLORS||[1,3,6,7,9,2,4,8,5]"
                     }
                 }
             ]
