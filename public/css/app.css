@@ -1,0 +1,73 @@
+.mybuttongroup {
+    display: inline;
+}
+
+.led-255 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #FFFFFF; /*white*/
+}
+
+.led-0 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #FF1493; /*pink*/
+}
+
+.led-1 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #0000FF; /*blue*/
+}
+
+.led-2 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #00FF00;/*green*/
+}
+
+.led-3 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #FFFF00; /*yellow*/
+}
+
+.led-4 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #FF0000; /*red*/
+}
+
+.led-5 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #800080;/*purple*/
+}
+
+.led-6 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #87CEEB;/*light blue*/
+}
+
+.led-7 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #FFA500; /*orange*/
+}
+
+.led-8 {
+    width: 30%;
+    padding-bottom: 30%;
+    margin:1.66%;
+    background-color: #00FFFF;/*cyan*/
+}

@@ -72,7 +72,7 @@ const AppActions = {
 };
 
 const EXTERNAL_METHODS = [
-    'blink', 'stop', 'getState' // Add your methods here
+    'setLED', 'getState' // Add your methods here
 ];
 
 EXTERNAL_METHODS.forEach(function(x) {

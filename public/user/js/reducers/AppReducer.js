@@ -1,8 +1,9 @@
 const AppConstants = require('../constants/AppConstants');
+const COLOR_NONE = 255; // LED off
 
 const AppReducer = function(state, action) {
     if (typeof state === 'undefined') {
-        return  {sensorValue: null, isClosed: false};
+        return  {ledOn: COLOR_NONE, isConnected: false, isClosed: false};
     } else {
         switch(action.type) {
         case AppConstants.APP_UPDATE:

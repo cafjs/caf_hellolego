@@ -13,15 +13,17 @@ exports.methods = {
     },
 
     async __iot_loop__() {
+        this.state.isConnected = this.$.lego.isConnected();
         if (this.toCloud.get('isConnected') !== this.state.isConnected) {
             this.toCloud.set('isConnected', this.state.isConnected);
         }
 
         if (this.state.isConnected) {
-            if (!myUtils.deepEqual(this.fromCloud.get('colors'),
-                                   this.state.colors)) {
-                this.state.colors = this.fromCloud.get('colors');
-                this.setMatrix(this.state.colors);
+            const cloudColors = this.fromCloud.get('colors');
+            if (cloudColors &&
+                !myUtils.deepEqual(cloudColors,this.state.colors)) {
+                this.state.colors = cloudColors;
+                await this.setMatrix(this.state.colors);
             }
         }
 
@@ -29,8 +31,11 @@ exports.methods = {
     },
 
     async connect(deviceTypes) {
-        await this.$.lego.connect(deviceTypes);
-        this.state.isConnected = true;
+        deviceTypes = deviceTypes || ['TECHNIC_3X3_COLOR_LIGHT_MATRIX'];
+        if (!this.state.isConnected) {
+            await this.$.lego.connect(deviceTypes);
+            this.state.isConnected = true;
+        }
         return [];
     },
 
@@ -42,7 +47,7 @@ exports.methods = {
 
     async setMatrix(colors) {
         await this.$.lego.callMethod(
-            'TECHNIC_3X3_COLOR_LIGHT_MATRIX', 'setMatrix', colors
+            'TECHNIC_3X3_COLOR_LIGHT_MATRIX', 'setMatrix', [colors]
         );
         return [];
     }

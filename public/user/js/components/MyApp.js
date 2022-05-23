@@ -1,9 +1,16 @@
+'use strict';
+
 const React = require('react');
 const rB = require('react-bootstrap');
-const cE = React.createElement;
-const Device = require('./Device');
+const AppActions = require('../actions/AppActions');
 const AppStatus = require('./AppStatus');
+
 const DisplayError = require('./DisplayError');
+
+const Matrix = require('./Matrix');
+
+
+const cE = React.createElement;
 
 class MyApp extends React.Component {
     constructor(props) {
@@ -63,28 +70,26 @@ class MyApp extends React.Component {
                           )
                        ),
                      cE(rB.Panel.Body, null,
-                        this.state.selectedDevice ?
                         cE(rB.Panel, null,
                            cE(rB.Panel.Heading, null,
-                              cE(rB.Panel.Title, null, 'Remote Device')
+                              cE(rB.Panel.Title, null, 'Color LED Matrix: ' +
+                                 (this.state.isConnected ?
+                                  'Connected' :
+                                  'NOT Connected')
+                                )
                              ),
                            cE(rB.Panel.Body, null,
-                              cE(Device, {
+                              cE(Matrix, {
                                   ctx: this.props.ctx,
-                                  selectedDevice: this.state.selectedDevice,
-                                  sensorValue: this.state.sensorValue
+                                  isConnected: this.state.isConnected,
+                                  ledOn: this.state.ledOn
                               })
-                             )
-                          ) :
-                        cE(rB.Panel, null,
-                           cE(rB.Panel.Heading, null,
-                              cE(rB.Panel.Title, null, 'No Connected Devices')
                              )
                           )
                        )
                     )
                  );
     }
-}
+};
 
 module.exports = MyApp;

@@ -1,14 +1,16 @@
 const AppConstants = require('../constants/AppConstants');
+const COLOR_NONE = 255; // LED off
 
 const isInIFrame = () =>  (typeof window !== 'undefined') &&
           (window.location !== window.parent.location);
 
 const AppReducer = function(state, action) {
     if (typeof state === 'undefined') {
-        return  {sensorValue: null, isClosed: false, config: {},
+        return  {isConnected: false, isClosed: false,
+                 ledOn: COLOR_NONE, displayDisconnect: false,
                  inIFrame: isInIFrame(),
-                 devices: {}, daemon: 0, displayUser: false, displayURL: false,
-                 displaySelectDevice: false, selectedDevice: null, error: null};
+                 displayURL: false,
+                 error: null};
     } else {
         switch(action.type) {
         case AppConstants.APP_UPDATE:

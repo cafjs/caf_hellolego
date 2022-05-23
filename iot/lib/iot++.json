@@ -28,6 +28,7 @@
                     "env" : {
                         "maxRetries" : "$._.env.maxRetries",
                         "retryDelay" : "$._.env.retryDelay",
+                        "manuallyAttached": "process.env.MANUALLY_ATTACHED||[[\"TECHNIC_3X3_COLOR_LIGHT_MATRIX\",\"A\"]]"
                     },
                     "components" : [
                         {

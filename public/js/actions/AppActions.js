@@ -72,7 +72,7 @@ const AppActions = {
 };
 
 const EXTERNAL_METHODS = [
-    'findDevices', 'connect', 'disconnect', 'blink', 'stop', 'setBrowserDaemon',
+    'setLED', 'connect', 'disconnect',
     'getState' // Add your methods here
 ];
 
