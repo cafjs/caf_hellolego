@@ -24,7 +24,7 @@ const AppActions = require('../actions/AppActions');
 const AppStatus = require('./AppStatus');
 const Matrix3D = require('./Matrix3D');
 
-const DEFAULT_COLOR = 'blue';
+const DEFAULT_COLOR = 'black';
 
 
 class MyApp extends React.Component {
@@ -87,15 +87,9 @@ class MyApp extends React.Component {
                       }),
                   cE(Entity, {
                       primitive: 'a-sky',
-                      'phi-start': 180,
+                      'phi-start': 90,
                       src: '#backgroundImg',
                       visible: !this.state.isAR
-                  }),
-                  cE(Entity, {
-                      geometry : {primitive: 'box', width: 2.5, height: 0.2,
-                                   depth: 1.5},
-                       material: {color: 'white'},
-                       position: {x: 0, y: 0, z: -2.8}
                   }),
                   cE(Matrix3D, {
                       ctx: this.props.ctx,
@@ -103,11 +97,11 @@ class MyApp extends React.Component {
                       ledOn: this.state.ledOn
                   }),
                   cE(Entity, {
-                      light: 'type: ambient; intensity: 0.05'
+                      light: 'type: ambient; intensity: 0.1'
                   }),
                   cE(Entity, {
-                      light: 'type: directional; intensity: 0.15',
-                      position: {x: 1.5, y: 2.0, z: 0.0}
+                      light: 'type: directional; intensity: 0.7',
+                      position: {x: 0, y: 0, z: 1}
                   }),
                   cE(Entity, {
                       'laser-controls' : 'hand: right',

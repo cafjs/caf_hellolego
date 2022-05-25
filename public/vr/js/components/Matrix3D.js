@@ -7,6 +7,10 @@ const Entity = aframeR.Entity;
 
 const AppActions = require('../actions/AppActions');
 
+// similar to `css/app.css`
+const COLORS = ['#FF1493', '#0000FF', '#00FF00', '#FFFF00', '#FF0000',
+                '#800080', '#87CEEB', '#FFA500', '#00FFFF' ];
+
 class Matrix3D extends React.Component {
 
     constructor(props) {
@@ -28,14 +32,16 @@ class Matrix3D extends React.Component {
             const col = i%3;
             const row = (i - col)/3;
 
-            const style = (i === this.props.ledOn ?
-                           `led-${i}` :
-                           `led-255`);
+            const color = (i === this.props.ledOn ? COLORS[i] : '#FFFFFF');
+
             return cE(Entity, {
-                geometry : {primitive: 'box', width: 3.8, height: 0.8,
-                            depth:0.1},
-                material: {color: 'yellow'},
-                position: {x: 0, y: 2, z: -2.75},
+                events: {
+                    click: this.handlers[i]
+                },
+                geometry : {primitive: 'box', width: 1.0, height: 1.0,
+                            depth: 0.4},
+                material: {color},
+                position: {x: col *1.2 -1.2, y: (3-row)*1.2, z: -5.0},
                 onClick: this.handlers[i]
             });
 
