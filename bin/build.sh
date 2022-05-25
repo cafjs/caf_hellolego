@@ -23,12 +23,27 @@ pid4=$!
 unset NODE_ENV
 popd #user
 
+#build vr
+
+pushd vr
+echo "browserify  -d js/main.js -o js/build.js"
+browserify  -d js/main.js -o js/build.js &
+pid5=$!
+echo "browserify js/main.js | uglifyjs > js/build.min.js"
+export NODE_ENV=production
+browserify js/main.js | uglifyjs > js/build.min.js &
+pid6=$!
+unset NODE_ENV
+popd #vr
+
 popd #public
 
 wait $pid1
 wait $pid2
 wait $pid3
 wait $pid4
+wait $pid5
+wait $pid6
 
 #build iot
 pushd iot

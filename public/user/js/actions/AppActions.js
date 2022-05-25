@@ -81,7 +81,14 @@ EXTERNAL_METHODS.forEach(function(x) {
         const ctx = args.shift();
         try {
             const data = await ctx.session[x].apply(ctx.session, args)
-                      .getPromise();
+                .getPromise();
+
+            /* We set these values locally first, and we don't want late
+               responses to move the gui back in time.*/
+            if (x === 'setLED') {
+                delete data.ledOn;
+            }
+
             updateF(ctx.store, data);
         } catch (err) {
             errorF(ctx.store, err);

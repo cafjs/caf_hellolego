@@ -7,7 +7,8 @@ exports.connect = function(ctx) {
         const myURL = urlParser.parse(window.location.href);
         const userSession = 'session=user' + cli.randomString(8);
         myURL.hash = myURL.hash.replace('session=user', userSession);
-        const session = new cli.Session(urlParser.format(myURL));
+        const session = new cli.Session(urlParser.format(myURL), null,
+                                        {timeoutMsec: 30000});
 
         session.onopen = async function() {
             console.log('open session');
