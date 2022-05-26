@@ -36,6 +36,7 @@ class Matrix3D extends React.Component {
 
             return this.props.isAR ?
                 cE(Entity, {
+                    class: 'clickable',
                     events: {
                         click: this.handlers[i]
                     },

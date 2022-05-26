@@ -31,7 +31,9 @@ class MyApp extends React.Component {
 
     constructor(props) {
         super(props);
+        this.sceneRef = React.createRef();
         this.state = this.props.ctx.store.getState();
+        this.onSelect = this.onSelect.bind(this);
     }
 
     componentDidMount() {
@@ -59,23 +61,80 @@ class MyApp extends React.Component {
         console.log('enter VR');
         const isAR = ev.currentTarget.sceneEl.is('ar-mode');
         AppActions.setLocalState(this.props.ctx, {isAR});
+        if (isAR) {
+            ev.currentTarget.sceneEl.xrSession.addEventListener(
+                'select', this.onSelect
+            );
+        }
         //ev.currentTarget.removeAttribute('cursor');
     }
 
     exitVR(ev) {
         console.log('exit VR');
+
         AppActions.setLocalState(this.props.ctx, {isAR: false});
         //ev.currentTarget.setAttribute('cursor', 'rayOrigin' , 'mouse');
     }
 
+    onSelect(e) {
+        // Following Ada Rose Cannon ar-cursor.js
+        // see https://github.com/AdaRoseCannon/aframe-xr-boilerplate
+        const sceneEl = this.sceneRef.current && this.sceneRef.current.el;
+        if (!sceneEl) {
+            console.log('No scene, skipping onSelect()');
+            return;
+        }
+
+        const frame = e.frame;
+        const inputSource = e.inputSource;
+        const referenceSpace = sceneEl.renderer.xr.getReferenceSpace();
+        const pose = frame.getPose(inputSource.targetRaySpace, referenceSpace);
+        if (!pose) {
+            console.log('No pose, skipping onSelect()');
+            return;
+        }
+        const direction = new window.THREE.Vector3();
+        const transform = pose.transform;
+        direction.set(0, 0, -1);
+        direction.applyQuaternion(transform.orientation);
+        sceneEl.setAttribute('raycaster', {
+            origin: transform.position,
+            direction
+        });
+
+        sceneEl.components.raycaster.checkIntersections();
+        const els = sceneEl.components.raycaster.intersectedEls;
+        for (const el of els) {
+            const obj = el.object3D;
+            let elVisible = obj.visible;
+            obj.traverseAncestors(parent => {
+                if (parent.visible === false ) {
+                    elVisible = false;
+                }
+            });
+            if (elVisible) {
+                const details = sceneEl.components.raycaster
+                      .getIntersection(el);
+                el.emit('click', details);
+                break;
+            }
+        }
+    }
+
     render() {
-        return cE(Scene, {
+        const sceneProps = {
             cursor: 'rayOrigin: mouse',
             renderer: 'antialias: true',
+            ref: this.sceneRef,
             events : {
                 'enter-vr': this.enterVR.bind(this),
                 'exit-vr': this.exitVR.bind(this)
-            }},
+            }};
+        if (this.state.isAR) {
+            sceneProps['raycaster'] = 'objects: .clickable';
+        }
+
+        return cE(Scene, sceneProps,
                   cE('a-assets', null,
                      cE('img', {
                          id: 'backgroundImg',
