@@ -34,17 +34,27 @@ class Matrix3D extends React.Component {
 
             const color = (i === this.props.ledOn ? COLORS[i] : '#FFFFFF');
 
-            return cE(Entity, {
-                events: {
-                    click: this.handlers[i]
-                },
-                geometry : {primitive: 'box', width: 1.0, height: 1.0,
-                            depth: 0.4},
-                material: {color},
-                position: {x: col *1.2 -1.2, y: (3-row)*1.2, z: -5.0},
-                onClick: this.handlers[i]
-            });
-
+            return this.props.isAR ?
+                cE(Entity, {
+                    events: {
+                        click: this.handlers[i]
+                    },
+                    geometry : {primitive: 'box', width: 0.25, height: 0.25,
+                                depth: 0.1},
+                    material: {color},
+                    position: {x: col *0.3 -0.3, y: (3-row)*0.3, z: -2.0},
+                    onClick: this.handlers[i]
+                }) :
+                cE(Entity, {
+                    events: {
+                        click: this.handlers[i]
+                    },
+                    geometry : {primitive: 'box', width: 1.0, height: 1.0,
+                                depth: 0.4},
+                    material: {color},
+                    position: {x: col *1.2 -1.2, y: (3-row)*1.2, z: -5.0},
+                    onClick: this.handlers[i]
+                });
         };
 
         return cE(Entity, {},

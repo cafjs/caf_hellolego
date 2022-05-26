@@ -94,7 +94,8 @@ class MyApp extends React.Component {
                   cE(Matrix3D, {
                       ctx: this.props.ctx,
                       isConnected: this.state.isConnected,
-                      ledOn: this.state.ledOn
+                      ledOn: this.state.ledOn,
+                      isAR: this.state.isAR
                   }),
                   cE(Entity, {
                       light: 'type: ambient; intensity: 0.1'
