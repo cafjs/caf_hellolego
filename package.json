@@ -16,7 +16,9 @@
        "redux": "^3.7.2",
         "keymirror": "^0.1.0",
         "aframe": "1.2.0",
-        "aframe-react": "^4.4.0"
+        "aframe-react": "^4.4.0",
+        "browserify-css": "^0.15.0",
+        "envify": "^3.4.1"
     },
     "devDependencies": {
         "caf_dcinabox" :"^0.4.0",
