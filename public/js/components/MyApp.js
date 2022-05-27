@@ -8,6 +8,7 @@ const AppStatus = require('./AppStatus');
 const DisplayError = require('./DisplayError');
 const DisplayURL = require('./DisplayURL');
 const DisplayDisconnect = require('./DisplayDisconnect');
+const DisplayAR = require('./DisplayAR');
 
 const Matrix = require('./Matrix');
 const Manage = require('./Manage');
@@ -55,6 +56,11 @@ class MyApp extends React.Component {
                   cE(DisplayDisconnect, {
                       ctx: this.props.ctx,
                       displayDisconnect: this.state.displayDisconnect
+                  }),
+                  cE(DisplayAR, {
+                      ctx: this.props.ctx,
+                      inIFrame: this.state.inIFrame,
+                      displayAR: this.state.displayAR
                   }),
                   cE(rB.Panel, null,
                      cE(rB.Panel.Heading, null,

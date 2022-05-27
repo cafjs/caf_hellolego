@@ -8,6 +8,7 @@ const AppReducer = function(state, action) {
     if (typeof state === 'undefined') {
         return  {isConnected: false, isClosed: false,
                  ledOn: COLOR_NONE, displayDisconnect: false,
+                 displayAR: false,
                  inIFrame: isInIFrame(),
                  displayURL: false,
                  error: null};

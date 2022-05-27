@@ -13,6 +13,8 @@ class DisplayURL extends React.Component {
         this.doDismissURL = this.doDismissURL.bind(this);
         this.doCopyURL = this.doCopyURL.bind(this);
         this.doEmail = this.doEmail.bind(this);
+        this.handleIsXR = this.handleIsXR.bind(this);
+
         this.state = {};
         if ((typeof window !== "undefined") &&
             window.location && window.location.href) {
@@ -23,7 +25,10 @@ class DisplayURL extends React.Component {
                                             'session=user');
             delete myURL.search; // delete cacheKey
             this.state.userURL = urlParser.format(myURL);
+            myURL.pathname = '/vr/index.html';
+            this.state.vrURL = urlParser.format(myURL);
         }
+        this.state.isVR = false;
     }
 
     doDismissURL(ev) {
@@ -31,7 +36,8 @@ class DisplayURL extends React.Component {
     }
 
     doEmail(ev) {
-        const body = encodeURIComponent(this.state.userURL);
+        const url = this.state.isVR ? this.state.vrURL : this.state.userURL;
+        const body = encodeURIComponent(url);
         const subject = encodeURIComponent('URL for device interaction');
         const mailtoURL = 'mailto:?subject=' + subject + '&body=' + body;
         window.open(mailtoURL);
@@ -39,8 +45,9 @@ class DisplayURL extends React.Component {
     }
 
     doCopyURL(ev) {
-        if (this.state.userURL) {
-            navigator.clipboard.writeText(this.state.userURL)
+        const url = this.state.isVR ? this.state.vrURL : this.state.userURL;
+        if (url) {
+            navigator.clipboard.writeText(url)
                 .then(() => {
                     console.log('Text copied OK to clipboard');
                 })
@@ -51,7 +58,13 @@ class DisplayURL extends React.Component {
         this.doDismissURL();
     }
 
+    handleIsXR(e) {
+        this.setState({isVR: !!e});
+    }
+
     render() {
+        const url = this.state.isVR ? this.state.vrURL : this.state.userURL;
+
         return cE(rB.Modal, {show: !!this.props.displayURL,
                              onHide: this.doDismissURL,
                              animation: false},
@@ -62,11 +75,26 @@ class DisplayURL extends React.Component {
                     ),
                   cE(rB.ModalBody, null,
                      cE(rB.Form, {horizontal: true},
+                        cE(rB.FormGroup, {controlId: 'xrId'},
+                           cE(rB.Col, {sm: 4, xs: 6},
+                              cE(rB.ControlLabel, null, 'Mode')
+                             ),
+                           cE(rB.Col, {sm: 4, xs: 6},
+                              cE(rB.ToggleButtonGroup, {
+                                  type: 'radio',
+                                  name : 'isXR',
+                                  value: this.state.isVR,
+                                  onChange: this.handleIsXR
+                              },
+                                 cE(rB.ToggleButton, {value: false}, '2D'),
+                                 cE(rB.ToggleButton, {value: true}, 'AR/VR')
+                                )
+                             )
+                          ),
                         cE(rB.FormGroup, {controlId: 'urlId'},
                            cE(rB.Col, {sm: 12},
                               cE(rB.FormControl.Static,
-                                 {style: {wordWrap: "break-word"}},
-                                 this.state.userURL)
+                                 {style: {wordWrap: "break-word"}}, url)
                              )
                           )
                        )

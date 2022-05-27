@@ -11,6 +11,7 @@ class Manage extends React.Component {
         super(props);
 
         this.share = this.share.bind(this);
+        this.doAR = this.doAR.bind(this);
         this.disconnect = this.disconnect.bind(this);
         this.spawnTab = this.spawnTab.bind(this);
     }
@@ -19,11 +20,18 @@ class Manage extends React.Component {
         AppActions.setLocalState(this.props.ctx, {displayURL: true});
     }
 
+    doAR() {
+        AppActions.setLocalState(this.props.ctx, {displayAR: true});
+    }
+
     disconnect() {
         if (!this.props.inIFrame) {
             AppActions.setLocalState(this.props.ctx, {displayDisconnect: true});
+            AppActions.disconnect(this.props.ctx, false);
+        } else {
+            // forced disconnect, even when the IoT bridge is missing...
+            AppActions.disconnect(this.props.ctx, true);
         }
-        AppActions.disconnect(this.props.ctx);
     }
 
     spawnTab() {
@@ -34,11 +42,14 @@ class Manage extends React.Component {
                                                     'session=standalone');
             if (parsedURL.host.endsWith('vcap.me')) {
                 /* Web Bluetooth can only be used with https or localhost.
-                 *  Chrome allows subdomains in localhost, i.e.,
-                 *  root-helloiot.localhost, and wih local debugging the app
-                 *  is also exposed on host port 3003 by default.
+                 * Chrome allows subdomains in localhost, i.e.,
+                 * root-helloiot.localhost, and with local debugging the app
+                 * is also exposed on host port 3003 by default.
                  *
-                 * Local debugging with Web Bluetooth requires Chrome!
+                 * Chrome tools can also proxy the port 3003 of my laptop to a
+                 * USB connected Android phone, and then we can locally debug
+                 * both Web Bluetooth and AR with WebXR, while they run in the
+                 * phone...
                  */
                 parsedURL.host = parsedURL.host.replace('vcap.me',
                                                         'localhost:3003');
@@ -47,17 +58,30 @@ class Manage extends React.Component {
         }
     }
 
-
     render() {
         if (this.props.isConnected) {
-            return cE(rB.ButtonGroup, {bsClass: 'btn-group mybuttongroup'},
-                      cE(rB.Button, {bsStyle: 'primary',
-                                     bsSize: 'large',
-                                     onClick: this.share}, 'Share'),
-                      cE(rB.Button, {bsSize: 'large',
-                                     bsStyle: 'danger',
-                                     onClick: this.disconnect}, 'Disconnect')
-                     );
+            return cE(rB.ButtonGroup, {bsClass: 'btn-group mybuttongroup'}, [
+                cE(rB.Button, {
+                    bsStyle: 'primary',
+                    bsSize: 'large',
+                    key: 12,
+                    onClick: this.share
+                }, 'Share'),
+                this.props.inIFrame ?
+                    null :
+                    cE(rB.Button, {
+                        key: 34,
+                        bsSize: 'large',
+                        bsStyle: 'info',
+                        onClick: this.doAR
+                    }, 'AR View'),
+                cE(rB.Button, {
+                    bsSize: 'large',
+                    key: 32,
+                    bsStyle: 'danger',
+                    onClick: this.disconnect
+                }, 'Disconnect')
+            ].filter(x => !!x));
         } else {
             if (this.props.inIFrame) {
                 return cE(rB.Button, {bsSize: 'large',
