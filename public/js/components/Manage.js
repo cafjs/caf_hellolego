@@ -63,7 +63,6 @@ class Manage extends React.Component {
             return cE(rB.ButtonGroup, {bsClass: 'btn-group mybuttongroup'}, [
                 cE(rB.Button, {
                     bsStyle: 'primary',
-                    bsSize: 'large',
                     key: 12,
                     onClick: this.share
                 }, 'Share'),
@@ -71,12 +70,10 @@ class Manage extends React.Component {
                     null :
                     cE(rB.Button, {
                         key: 34,
-                        bsSize: 'large',
                         bsStyle: 'info',
                         onClick: this.doAR
                     }, 'AR View'),
                 cE(rB.Button, {
-                    bsSize: 'large',
                     key: 32,
                     bsStyle: 'danger',
                     onClick: this.disconnect
