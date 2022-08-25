@@ -125,6 +125,7 @@ class MyApp extends React.Component {
         const sceneProps = {
             cursor: 'rayOrigin: mouse',
             renderer: 'antialias: true',
+            'device-orientation-permission-ui': 'enabled: false',
             ref: this.sceneRef,
             events : {
                 'enter-vr': this.enterVR.bind(this),

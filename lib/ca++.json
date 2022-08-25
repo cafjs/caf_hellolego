@@ -4,7 +4,7 @@
         {
             "name": "session",
              "env" : {
-                 "maxSessions" :"process.env.MAX_SESSIONS||5",
+                 "maxSessions" :"process.env.MAX_SESSIONS||20",
                  "maxMessages" : "process.env.MAX_MESSAGES||1"
              }
         },
