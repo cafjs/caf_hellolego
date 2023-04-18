@@ -5,7 +5,7 @@
 # TO_BUILD:        cafjs mkImage . gcr.io/cafjs-k8/<user>-hellolego
 # TO_RUN:         cafjs run --appImage gcr.io/cafjs-k8/<user>-hellolego hellolego
 
-FROM node:16
+FROM node:18
 
 EXPOSE 3000
 
